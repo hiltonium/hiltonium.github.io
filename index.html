@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MailVeil - Privacy-First Email Summarizer for Gmail</title>
+  <meta name="description" content="Summarize your Gmail emails with AI while keeping your personal data private. MailVeil obfuscates sensitive information locally before it ever leaves your browser.">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --primary-light: #EEF2FF;
+      --text: #1F2937;
+      --text-light: #6B7280;
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --border: #E5E7EB;
+      --success: #059669;
+      --accent: #7C3AED;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 140px 24px 80px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.15;
+      max-width: 800px;
+      margin: 0 auto 24px;
+      color: var(--text);
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Section base */
+    section {
+      padding: 96px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 64px;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+
+    /* How it works */
+    .how-it-works {
+      background: var(--bg-alt);
+    }
+
+    .steps {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .step h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Features */
+    .features-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Privacy */
+    .privacy-section {
+      background: var(--bg-alt);
+    }
+
+    .privacy-demo {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .privacy-text h3 {
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .privacy-text ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .privacy-text li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    .privacy-text li::before {
+      content: "\2713";
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .code-block {
+      background: #1F2937;
+      border-radius: 12px;
+      padding: 24px;
+      color: #E5E7EB;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .code-block .label {
+      color: #9CA3AF;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .code-block .original {
+      color: #FCA5A5;
+      text-decoration: line-through;
+    }
+
+    .code-block .obfuscated {
+      color: #86EFAC;
+    }
+
+    .code-block .arrow {
+      color: #FBBF24;
+      display: block;
+      text-align: center;
+      margin: 12px 0;
+    }
+
+    /* Pricing */
+    .pricing-cards {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .pricing-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--primary);
+      box-shadow: 0 8px 32px rgba(79, 70, 229, 0.15);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 20px;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .pricing-card .price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .pricing-card .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-light);
+    }
+
+    .pricing-card .period {
+      color: var(--text-light);
+      margin-bottom: 24px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin: 24px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pricing-features li {
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-features li::before {
+      content: "\2713";
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    /* FAQ */
+    .faq-section {
+      background: var(--bg-alt);
+    }
+
+    .faq-list {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+
+    .faq-item summary {
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      font-size: 1.5rem;
+      color: var(--text-light);
+      transition: transform 0.2s;
+    }
+
+    .faq-item[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-item p {
+      margin-top: 12px;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      background: #111827;
+      color: #9CA3AF;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 24px;
+      list-style: none;
+    }
+
+    footer .footer-links a {
+      color: #9CA3AF;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    footer .footer-links a:hover {
+      color: white;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1.05rem;
+      }
+
+      .steps {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .privacy-demo {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-cards {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">MailVeil</a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#privacy">Privacy</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Summarize emails.<br><span>Keep your data private.</span></h1>
+    <p>MailVeil is a Chrome extension that summarizes your Gmail emails with AI, while obfuscating personal information locally before it ever leaves your browser.</p>
+    <div class="cta-group">
+      <a href="#" class="btn btn-primary">Add to Chrome - It's Free</a>
+      <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Four simple steps to get a private, AI-powered summary of any email.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Open an Email</h3>
+        <p>Open any email in Gmail and click the MailVeil icon in the side panel.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Local Obfuscation</h3>
+        <p>Names, emails, phone numbers and addresses are replaced with placeholders locally in your browser.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>AI Summarization</h3>
+        <p>Only the obfuscated text is sent to the AI. Your personal details never leave your device.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Reveal Details</h3>
+        <p>Read your summary and optionally restore the original names and details with one click.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-header">
+      <h2>Features</h2>
+      <p>Everything you need to stay on top of your inbox without compromising privacy.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">&#128274;</div>
+        <h3>On-Device AI Detection</h3>
+        <p>A BERT-based NER model runs locally in your browser to detect names, organisations, and sensitive entities - no server required.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9889;</div>
+        <h3>Instant Summaries</h3>
+        <p>Get concise summaries highlighting key points, action items, deadlines, and decisions needed - in seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128209;</div>
+        <h3>PDF &amp; Attachment Support</h3>
+        <p>Automatically extract and summarize text from PDF attachments, including table-aware extraction for timetables and menus.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128065;</div>
+        <h3>Preview Before Sending</h3>
+        <p>Review exactly what the AI will see before any data leaves your browser. Full transparency, always.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9997;</div>
+        <h3>Manual Masking</h3>
+        <p>Spotted something the AI missed? Select any text and mark it as a person, location, organisation, or contact detail.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#128260;</div>
+        <h3>One-Click Reveal</h3>
+        <p>After reading your summary, restore original names and details locally. The mapping never leaves your device.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section class="privacy-section" id="privacy">
+    <div class="section-header">
+      <h2>Privacy by Design</h2>
+      <p>Your sensitive data is protected at every step of the process.</p>
+    </div>
+    <div class="privacy-demo">
+      <div class="privacy-text">
+        <h3>Multi-layer protection that works locally</h3>
+        <ul>
+          <li>AI-powered entity recognition runs entirely in your browser</li>
+          <li>500+ name patterns detected via built-in dictionaries</li>
+          <li>Emails, phone numbers, addresses and dates caught by pattern matching</li>
+          <li>No email content stored on our servers - ever</li>
+          <li>Obfuscation mappings exist only in browser memory</li>
+          <li>Google Gemini API processes only obfuscated text and does not use it for training</li>
+        </ul>
+      </div>
+      <div class="code-block">
+        <span class="label">What you write</span>
+        <span class="original">Hi Sarah, please call John on 07700 900123 about the meeting at 42 Oak Street. His email is john.smith@company.com</span>
+        <span class="arrow">&#8595; obfuscated locally &#8595;</span>
+        <span class="label">What the AI sees</span>
+        <span class="obfuscated">Hi [PER_1], please call [PER_2] on [PHONE_1] about the meeting at [LOC_1]. His email is [EMAIL_1]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing">
+    <div class="section-header">
+      <h2>Simple Pricing</h2>
+      <p>Start for free. Upgrade when you need more.</p>
+    </div>
+    <div class="pricing-cards">
+      <div class="pricing-card">
+        <h3>Free</h3>
+        <div class="price">$0<span>/mo</span></div>
+        <ul class="pricing-features">
+          <li>5 email summaries per month</li>
+          <li>Full obfuscation engine</li>
+          <li>PDF attachment support</li>
+          <li>Manual masking tools</li>
+          <li>Preview before sending</li>
+        </ul>
+        <a href="#" class="btn btn-secondary" style="width: 100%; justify-content: center;">Get Started</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most Popular</div>
+        <h3>Pro</h3>
+        <div class="price">$5<span>/mo</span></div>
+        <ul class="pricing-features">
+          <li>200 email summaries per month</li>
+          <li>Full obfuscation engine</li>
+          <li>PDF attachment support</li>
+          <li>Manual masking tools</li>
+          <li>Preview before sending</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center;">Upgrade to Pro</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="section-header">
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Does MailVeil read my emails?</summary>
+        <p>MailVeil processes your email text locally in your browser to detect and replace personal information. Only the obfuscated version (with placeholders like [PER_1]) is sent to the AI for summarization. Your original email content is never transmitted to our servers.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What personal information does it detect?</summary>
+        <p>MailVeil uses a combination of an on-device AI model (BERT NER), name dictionaries, and pattern matching to detect names, email addresses, phone numbers, physical addresses, dates of birth, organisation names, and URLs.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Is the obfuscation 100% perfect?</summary>
+        <p>No automated system is 100% perfect. That's why MailVeil offers a "Preview before sending" feature so you can review exactly what the AI will see, plus manual masking tools to catch anything the automation might miss. We recommend using these features for sensitive emails.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What AI model do you use?</summary>
+        <p>MailVeil uses Google's Gemini 2.0 Flash for summarization. The API is accessed through a paid tier, which means Google does not use the data sent to it for model training.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I cancel my subscription?</summary>
+        <p>Yes, you can cancel anytime through the subscription management portal accessible from the extension. You'll continue to have Pro access until the end of your billing period.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Does it work with email attachments?</summary>
+        <p>Yes, MailVeil can extract and summarize text from PDF attachments, including table-aware extraction that handles timetables, menus, and structured documents. It also supports TXT, CSV, and HTML attachments.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <ul class="footer-links">
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="https://github.com/nicholasgonzalez1/gmail_extension">GitHub</a></li>
+      </ul>
+      <p>&copy; 2026 MailVeil. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
