@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - MailVeil</title>
+  <meta name="description" content="MailVeil Privacy Policy — how we collect, use, and protect your data.">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #4F46E5;
+      --primary-dark: #4338CA;
+      --primary-light: #EEF2FF;
+      --text: #1F2937;
+      --text-light: #6B7280;
+      --bg: #FFFFFF;
+      --bg-alt: #F9FAFB;
+      --border: #E5E7EB;
+      --success: #059669;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-back {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover {
+      color: var(--primary);
+    }
+
+    /* Page header */
+    .page-header {
+      padding: 120px 24px 56px;
+      background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg) 100%);
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    /* Content */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    /* Table of contents */
+    .toc {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-bottom: 56px;
+    }
+
+    .toc h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      margin-bottom: 16px;
+    }
+
+    .toc ol {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toc a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .toc a:hover {
+      text-decoration: underline;
+    }
+
+    /* Sections */
+    .policy-section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+
+    .policy-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .policy-section h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 24px 0 10px;
+    }
+
+    .policy-section p {
+      color: var(--text-light);
+      margin-bottom: 14px;
+      font-size: 0.97rem;
+    }
+
+    .policy-section ul,
+    .policy-section ol {
+      color: var(--text-light);
+      font-size: 0.97rem;
+      padding-left: 20px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Pipeline box */
+    .pipeline {
+      background: #1F2937;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 20px 0;
+      counter-reset: pipeline-counter;
+    }
+
+    .pipeline-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .pipeline-step:last-child {
+      margin-bottom: 0;
+    }
+
+    .pipeline-step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pipeline-step p {
+      color: #D1D5DB;
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .pipeline-step p strong {
+      color: #F9FAFB;
+    }
+
+    /* Highlight box */
+    .highlight-box {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+
+    .highlight-box p {
+      color: var(--text);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* Table */
+    .retention-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin: 16px 0 14px;
+    }
+
+    .retention-table th {
+      background: var(--bg-alt);
+      color: var(--text);
+      font-weight: 600;
+      text-align: left;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+    }
+
+    .retention-table td {
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      color: var(--text-light);
+      vertical-align: top;
+    }
+
+    .retention-table tr:nth-child(even) td {
+      background: var(--bg-alt);
+    }
+
+    /* Third-party cards */
+    .third-party-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .third-party-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    .third-party-card h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .third-party-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin: 0;
+    }
+
+    .third-party-card a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .third-party-card a:hover {
+      text-decoration: underline;
+    }
+
+    /* Contact */
+    .contact-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 16px;
+    }
+
+    .contact-box p {
+      margin-bottom: 8px;
+    }
+
+    .contact-box a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .contact-box a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      background: #111827;
+      color: #9CA3AF;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    footer .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer .footer-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 16px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    footer .footer-links a {
+      color: #9CA3AF;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    footer .footer-links a:hover {
+      color: white;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+
+    footer p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .toc,
+      .contact-box {
+        padding: 20px;
+      }
+
+      .retention-table {
+        font-size: 0.85rem;
+      }
+
+      .retention-table th,
+      .retention-table td {
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">MailVeil</a>
+      <a href="/" class="nav-back">&#8592; Back to home</a>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: 20 February 2026</p>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="highlight-box">
+      <p><strong>The short version:</strong> Your email content is never stored on our servers. Personal information detected in your emails is replaced with anonymous placeholders <em>on your device</em> before anything is sent to AI. We collect the minimum data needed to operate the service.</p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="toc">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#who-we-are">Who We Are</a></li>
+        <li><a href="#what-we-collect">What Data We Collect</a></li>
+        <li><a href="#what-we-dont-collect">What We Do Not Collect</a></li>
+        <li><a href="#how-email-is-processed">How Your Email Content Is Processed</a></li>
+        <li><a href="#how-we-use-data">How We Use Your Data</a></li>
+        <li><a href="#third-parties">Third-Party Services</a></li>
+        <li><a href="#data-retention">Data Retention</a></li>
+        <li><a href="#your-rights">Your Rights</a></li>
+        <li><a href="#cookies">Cookies</a></li>
+        <li><a href="#children">Children's Privacy</a></li>
+        <li><a href="#changes">Changes to This Policy</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ol>
+    </div>
+
+    <!-- 1. Who We Are -->
+    <div class="policy-section" id="who-we-are">
+      <h2>1. Who We Are</h2>
+      <p>MailVeil is a Chrome browser extension that summarizes Gmail emails using AI while protecting the privacy of the people mentioned in those emails. The extension and website at <strong>mail-veil.com</strong> are operated by the MailVeil team.</p>
+      <p>This Privacy Policy explains what personal data we collect through the MailVeil Chrome extension and website, why we collect it, how we use it, and what rights you have.</p>
+    </div>
+
+    <!-- 2. What We Collect -->
+    <div class="policy-section" id="what-we-collect">
+      <h2>2. What Data We Collect</h2>
+      <p>We collect the minimum data necessary to provide the service.</p>
+
+      <h3>Account information (when you sign in with Google)</h3>
+      <ul>
+        <li>Your Google account <strong>email address</strong></li>
+        <li>Your Google account <strong>display name</strong></li>
+        <li>Your Google account <strong>profile picture URL</strong></li>
+      </ul>
+      <p>This data is used solely to identify your account and is sourced from Google's standard OAuth sign-in. We request only the <code>userinfo.email</code> and <code>userinfo.profile</code> scopes — we do not request access to your emails or any other Google data.</p>
+
+      <h3>Usage data</h3>
+      <ul>
+        <li><strong>Monthly summary count</strong> — we store the number of email summaries you have generated in the current calendar month. This is used to enforce the free tier limit (5 summaries/month) and the Pro tier limit (200 summaries/month). This count resets at the start of each calendar month.</li>
+      </ul>
+
+      <h3>Event logs</h3>
+      <p>We record the following events for security monitoring and service reliability:</p>
+      <ul>
+        <li>Sign-in events</li>
+        <li>Error events (e.g. failed API calls, quota exceeded)</li>
+        <li>Administrative actions (e.g. account deletion)</li>
+      </ul>
+      <p>These logs do not include your email content. They are automatically deleted after <strong>90 days</strong>.</p>
+
+      <h3>Deleted account identifiers</h3>
+      <p>When an account is deleted, we retain the associated Google account email address solely to prevent repeated misuse of the free trial. This data is not used for any other purpose.</p>
+
+      <h3>Payment data</h3>
+      <p>Subscription payments are processed by <strong>Stripe</strong>. MailVeil does not store, process, or have access to your credit card or payment details. All payment data is governed by <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe's Privacy Policy</a>.</p>
+    </div>
+
+    <!-- 3. What We Don't Collect -->
+    <div class="policy-section" id="what-we-dont-collect">
+      <h2>3. What We Do Not Collect</h2>
+
+      <div class="highlight-box">
+        <p>&#128274; <strong>Your email content is never stored on MailVeil servers.</strong> The obfuscated text sent to our server for AI processing is discarded immediately after the summary is returned — it is never logged or retained.</p>
+      </div>
+
+      <ul>
+        <li><strong>Email content</strong> — We never store the text of your emails, obfuscated or otherwise, on our servers.</li>
+        <li><strong>Obfuscation mappings</strong> — The table that maps placeholders (e.g. <code>[PER_1]</code>) back to real names and details exists only in your browser's memory during an active summarization session. It is never transmitted to our servers.</li>
+        <li><strong>Contacts or address book data</strong> — We do not access, read, or store your Gmail contacts.</li>
+        <li><strong>Attachment files</strong> — PDF and other attachments are processed locally in your browser. File content is not transmitted to or stored by MailVeil.</li>
+        <li><strong>Browsing history</strong> — We do not track which websites you visit outside of Gmail.</li>
+      </ul>
+    </div>
+
+    <!-- 4. How Email Content Is Processed -->
+    <div class="policy-section" id="how-email-is-processed">
+      <h2>4. How Your Email Content Is Processed</h2>
+      <p>When you request a summary, the following sequence occurs:</p>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">1</div>
+          <p><strong>Local reading.</strong> The email text is read directly from Gmail in your browser. It does not leave your device at this point.</p>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">2</div>
+          <p><strong>On-device entity detection.</strong> A BERT-based Named Entity Recognition (NER) model, bundled inside the extension, analyses the text locally to identify names, email addresses, phone numbers, physical addresses, and other personal details. This AI model runs entirely in your browser — no data is sent to a server for this step.</p>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">3</div>
+          <p><strong>Local obfuscation.</strong> Detected personal details are replaced with anonymous placeholders (e.g. <em>Sarah Jones</em> becomes <code>[PER_1]</code>, <em>07700 900123</em> becomes <code>[PHONE_1]</code>). The mapping between placeholders and real values is held only in your browser's memory.</p>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">4</div>
+          <p><strong>Transmission of obfuscated text.</strong> Only the anonymised, placeholder-substituted version of the email is sent to MailVeil's server. Real personal details are never transmitted.</p>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">5</div>
+          <p><strong>AI summarisation.</strong> MailVeil's server forwards the obfuscated text to the Google Gemini API to generate a summary. The obfuscated text is not stored — it is passed through and discarded immediately after the summary response is received.</p>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-number">6</div>
+          <p><strong>Local restoration.</strong> The summary is returned to your browser. If you choose to reveal original details, the local mapping is used to substitute placeholders back to real names. This happens entirely in your browser.</p>
+        </div>
+      </div>
+
+      <p>You can review the obfuscated text before it is sent by using the <strong>"Preview before sending"</strong> feature in the extension. If you spot any missed personal detail, you can use the <strong>manual masking</strong> tool to cover it before proceeding.</p>
+    </div>
+
+    <!-- 5. How We Use Your Data -->
+    <div class="policy-section" id="how-we-use-data">
+      <h2>5. How We Use Your Data</h2>
+      <p>The data we collect is used exclusively for the following purposes:</p>
+      <ul>
+        <li><strong>Account management</strong> — to authenticate you and associate your usage with your account.</li>
+        <li><strong>Quota enforcement</strong> — to track how many summaries you have used in the current month and enforce free/Pro tier limits.</li>
+        <li><strong>Subscription management</strong> — to verify your Pro subscription status via Stripe.</li>
+        <li><strong>Fraud prevention</strong> — to detect and prevent repeated misuse of the free trial using deleted account identifiers.</li>
+        <li><strong>Service reliability</strong> — to detect errors and maintain service stability using anonymised event logs.</li>
+      </ul>
+      <p>We do not use your data for advertising, profiling, or marketing. We do not sell your data to third parties.</p>
+    </div>
+
+    <!-- 6. Third-Party Services -->
+    <div class="policy-section" id="third-parties">
+      <h2>6. Third-Party Services</h2>
+      <p>MailVeil uses the following third-party services to operate:</p>
+
+      <div class="third-party-list">
+        <div class="third-party-card">
+          <h4>Google Firebase</h4>
+          <p>Used for user authentication (Firebase Auth) and database storage (Firestore). Your account email, display name, profile picture, monthly usage count, and event logs are stored in Firebase. Firebase is operated by Google LLC. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy and Security</a>.</p>
+        </div>
+        <div class="third-party-card">
+          <h4>Google Gemini API</h4>
+          <p>Used to generate email summaries from obfuscated text. MailVeil accesses Gemini through a paid API tier. Under Google's paid API terms, data submitted to the Gemini API is not used to train Google's AI models. See <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Gemini API Terms of Service</a>.</p>
+        </div>
+        <div class="third-party-card">
+          <h4>Stripe</h4>
+          <p>Used to process Pro subscription payments. MailVeil does not store payment card details. All billing data is handled by Stripe, Inc. under their own privacy policy. See <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe Privacy Policy</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Data Retention -->
+    <div class="policy-section" id="data-retention">
+      <h2>7. Data Retention</h2>
+
+      <table class="retention-table">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Retention period</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Email content (obfuscated text sent for summarisation)</td>
+            <td>Not retained — discarded immediately after summary is generated</td>
+          </tr>
+          <tr>
+            <td>Monthly summary count</td>
+            <td>Reset at the start of each calendar month</td>
+          </tr>
+          <tr>
+            <td>Account profile (email, name, picture)</td>
+            <td>Retained until account is deleted</td>
+          </tr>
+          <tr>
+            <td>Event logs</td>
+            <td>Automatically deleted after 90 days</td>
+          </tr>
+          <tr>
+            <td>Deleted account email identifiers</td>
+            <td>Retained indefinitely solely to prevent free trial abuse</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 8. Your Rights -->
+    <div class="policy-section" id="your-rights">
+      <h2>8. Your Rights</h2>
+      <p>Depending on where you are located, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access</strong> — request a copy of the personal data we hold about you.</li>
+        <li><strong>Correction</strong> — request correction of inaccurate data.</li>
+        <li><strong>Deletion</strong> — request deletion of your personal data. Note that deleting your account via the extension will delete your profile immediately and revoke your Google authentication token. The email address used will be retained to prevent trial abuse (see section 7).</li>
+        <li><strong>Portability</strong> — request your data in a machine-readable format.</li>
+        <li><strong>Objection</strong> — object to processing of your data in certain circumstances.</li>
+      </ul>
+
+      <h3>Deleting your account</h3>
+      <p>You can delete your account at any time from within the MailVeil extension by opening the account menu and selecting <strong>Close Account</strong>. Upon deletion:</p>
+      <ul>
+        <li>Your profile (name, picture, usage data) is deleted immediately from our database.</li>
+        <li>Your Google OAuth token is revoked — MailVeil loses all access to your Google account.</li>
+        <li>Your email address is retained solely to prevent re-registration for a new free trial.</li>
+      </ul>
+      <p>To exercise any other rights, or to request deletion of your retained email identifier, contact us at the address in section 12.</p>
+    </div>
+
+    <!-- 9. Cookies -->
+    <div class="policy-section" id="cookies">
+      <h2>9. Cookies</h2>
+      <p><strong>The MailVeil website does not use cookies or any tracking technologies.</strong> No analytics, advertising, or tracking scripts are loaded on this website.</p>
+      <p>The MailVeil Chrome extension uses browser storage (<code>chrome.storage.local</code>) to cache your authentication state locally on your device. This is not a cookie and is not accessible to websites.</p>
+    </div>
+
+    <!-- 10. Children -->
+    <div class="policy-section" id="children">
+      <h2>10. Children's Privacy</h2>
+      <p>MailVeil is not directed at children under the age of 13 (or 16 in the EU/UK). We do not knowingly collect personal data from children. If you believe a child has provided us with personal data, please contact us and we will delete it promptly.</p>
+    </div>
+
+    <!-- 11. Changes -->
+    <div class="policy-section" id="changes">
+      <h2>11. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we do, we will update the "Last updated" date at the top of this page. For significant changes, we will notify users via the extension or by email where required by law.</p>
+      <p>Continued use of MailVeil after changes are posted constitutes your acceptance of the updated policy.</p>
+    </div>
+
+    <!-- 12. Contact -->
+    <div class="policy-section" id="contact">
+      <h2>12. Contact Us</h2>
+      <p>If you have questions about this Privacy Policy, wish to exercise your data rights, or want to report a privacy concern, please contact us:</p>
+      <div class="contact-box">
+        <p><strong>MailVeil</strong></p>
+        <p>Email: <a href="mailto:mailveileds@gmail.com">mailveileds@gmail.com</a></p>
+        <p>Website: <a href="https://mail-veil.com">mail-veil.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <ul class="footer-links">
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Support</a></li>
+        <li><a href="https://github.com/nicholasgonzalez1/gmail_extension">GitHub</a></li>
+      </ul>
+      <p>&copy; 2026 MailVeil. All rights reserved.</p>
+      <p>The MailVeil website does not use cookies or any tracking technologies.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
